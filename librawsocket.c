@@ -1,4 +1,4 @@
-#include "libhexdump.c"
+#include "libhexdump.h"
 #include "librawsocket.h"
 
 int create_rawsocket(int protocol_to_sniff)
