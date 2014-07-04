@@ -3,6 +3,14 @@
 
 #include <stdint.h>
 
+#define RT_RATE_FLAG		(1<<2)
+#define RT_CHAN_FLAG		(1<<3)
+#define RT_TXDB_FLAG		(1<<10)
+#define RT_ANTN_FLAG		(1<<11)
+
+#define RATE_TO_RADIOTAP(X) (X/500)
+#define RADIOTAP_TO_RATE(X) (X*500)
+
 typedef struct {
     u_int8_t	it_version;
     u_int8_t	it_pad;

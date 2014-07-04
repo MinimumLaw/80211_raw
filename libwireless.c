@@ -18,7 +18,7 @@ void dump_80211_packet(char* pkt, size_t len)
 		printf("\nRADIOTAP: vers:0x%02X, len: %d, flags: 0x%04X\n",
 		rtp->it_version, rtp->it_len, rtp->it_present);
 		printf("IEEE802.11 src=%02x:%02x:%02x:%02x:%02x:%02x, "
-		"dst=%02x:%02x:%02x:%02x:%02x:%02x bssid==%02x:%02x:%02x:%02x:%02x:%02x\n",
+		"dst=%02x:%02x:%02x:%02x:%02x:%02x bssid=%02x:%02x:%02x:%02x:%02x:%02x\n",
 		wlan->src[0],wlan->src[1],wlan->src[2],wlan->src[3],wlan->src[4],wlan->src[5],
 		wlan->dst[0],wlan->dst[1],wlan->dst[2],wlan->dst[3],wlan->dst[4],wlan->dst[5],
 		wlan->bssid[0],wlan->bssid[1],wlan->bssid[2],wlan->bssid[3],wlan->bssid[4],wlan->bssid[5]);
