@@ -32,7 +32,7 @@ int main(char argc, char** argv, char** env)
 	return -1;
     }
     strncpy(ifname,argv[1],strlen(argv[1]));
-    ret = sscanf(argv[2],"%02x:%02x:%02x:%02x:%02x:%02x",
+    ret = sscanf(argv[2],"%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
 	&rem_ethaddr[0],&rem_ethaddr[1],&rem_ethaddr[2],
 	&rem_ethaddr[3],&rem_ethaddr[4],&rem_ethaddr[5]);
     if(ret<6)
@@ -42,7 +42,7 @@ int main(char argc, char** argv, char** env)
 	return -1;
     }
 
-    ret = sscanf(argv[3],"%02x:%02x:%02x:%02x:%02x:%02x",
+    ret = sscanf(argv[3],"%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
 	&bssid[0],&bssid[1],&bssid[2],
 	&bssid[3],&bssid[4],&bssid[5]);
     if(ret<6)
