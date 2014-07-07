@@ -35,8 +35,27 @@ void* receiver(void* ifname)
     }
 
     do { /* recever loop */
+	radiotap_header*	rt = (radiotap_header*)rcv_buff;
+	ieee80211_qos_header*	wl;
+	llc_header*		llc;
+	char*			payload;
+	size_t			payload_size;
+
 	pkt_size = recv_rawpacket(rwsock, rcv_buff, iface_mtu);
-	fprintf(stderr,"r");
+	wl = (ieee80211_qos_header*)(rcv_buff + rt->it_len);
+	llc = (llc_header *)(rcv_buff + rt->it_len + sizeof(ieee80211_qos_header));
+	payload = (char *)(rcv_buff + rt->it_len + sizeof(ieee80211_qos_header) + sizeof(llc_header));
+	payload_size = pkt_size - rt->it_len - sizeof(ieee80211_qos_header) - sizeof(llc_header);
+	if( payload_size > 0 ) {
+	    if( (llc->dsap == 0xaa) && (llc->ssap == 0xaa) && (llc->type == htons(0x1234)) ) {
+		fprintf(stderr,"R");
+		hexdump("Packet", rcv_buff, 0x50);
+	    } else {
+		fprintf(stderr,"r");
+	    }
+	} else {
+	    fprintf(stderr,"r");
+	}
     } while(pkt_size != -1);
     fprintf(stderr,"We _MUST_ not run this code, if no error present\r\n");
     exit(-1);
