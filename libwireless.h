@@ -3,10 +3,15 @@
 
 #include <stdint.h>
 
+#define RT_FLAG_FLAG		(1<<1)
 #define RT_RATE_FLAG		(1<<2)
 #define RT_CHAN_FLAG		(1<<3)
 #define RT_TXDB_FLAG		(1<<10)
 #define RT_ANTN_FLAG		(1<<11)
+
+#define RT_TXCFG_FLAGS	(RT_FLAG_FLAG |\
+			 RT_RATE_FLAG | RT_CHAN_FLAG |\
+			 RT_TXDB_FLAG | RT_ANTN_FLAG)
 
 #define RATE_TO_RADIOTAP(X) (X/500)
 #define RADIOTAP_TO_RATE(X) (X*500)
@@ -17,6 +22,19 @@ typedef struct {
     __le16	it_len;
     __le32	it_present;
 } __attribute__((__packed__)) radiotap_header;
+
+typedef struct {
+    u_int8_t	it_version;
+    u_int8_t	it_pad;
+    __le16	it_len; /* sizeof(radiotap_tx_header) */
+    __le32	it_present; /* always RT_TXCFG_FLAGS */
+    u_int8_t	flags; /* wep, frars, etc.. */
+    u_int8_t	rate;
+    u_int16_t	freq;
+    u_int16_t	chtype;
+    u_int8_t	txpwr;
+    u_int8_t	ant;
+} __attribute__((__packed__)) radiotap_tx_header;
 
 typedef struct {
 	__le16	frame_control;
