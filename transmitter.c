@@ -115,7 +115,6 @@ void* transmitter(void* ifname)
 	memcpy(wl->src, loc_mac, ETH_ALEN);
 	memcpy(wl->dst, rem_mac, ETH_ALEN);
 	memcpy(wl->bssid, bssid, ETH_ALEN);
-	wl->qos_control = 0x0000;
 	/* llc header */
 	llc->dsap = 0xaa; /*!!!*/
 	llc->ssap = 0xaa; /*!!!*/
