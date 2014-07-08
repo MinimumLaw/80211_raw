@@ -14,7 +14,7 @@ char*	ifname;
 int	rwsock;
 
 /* FixMe: need got this info from socket */
-const size_t	iface_mtu = 1500;
+const size_t	iface_mtu = 1300;
 #ifdef ACKGEN
 unsigned char loc_mac[]	= {0x12,0x34,0x56,0x78,0x9a,0xbc};
 #else
@@ -108,8 +108,6 @@ void* transmitter(void* ifname)
 	bzero(snd_buff, iface_mtu);
 	/* radiotap configuration */
 	rt->it_len = sizeof(radiotap_tx_header);
-	rt->it_present = RT_RATE_FLAG;
-	rt->rate = RATE_TO_RADIOTAP(5500);
 	/* ieee802.11 header */
 	wl->frame_control = htons(0x8800); /*!!!*/
 	memcpy(wl->src, loc_mac, ETH_ALEN);
