@@ -12,12 +12,21 @@
 /* global definition */
 char*	ifname;
 int	rwsock;
-unsigned char rem_mac[]	= {0x01,0x23,0x45,0x67,0x89,0xab};
-unsigned char bssid[] 	= {0xde,0xad,0xca,0xfe,0xbe,0xaf};
 
 /* FixMe: need got this info from socket */
 const size_t	iface_mtu = 1500;
+#ifdef ACKGEN
 unsigned char loc_mac[]	= {0x12,0x34,0x56,0x78,0x9a,0xbc};
+#else
+unsigned char loc_mac[]	= {0x01,0x23,0x45,0x67,0x89,0xab};
+#endif
+
+#ifdef ACKGEN
+unsigned char rem_mac[]	= {0x01,0x23,0x45,0x67,0x89,0xab};
+#else
+unsigned char rem_mac[]	= {0x12,0x34,0x56,0x78,0x9a,0xbc};
+#endif
+unsigned char bssid[] 	= {0xde,0xad,0xca,0xfe,0xbe,0xaf};
 
 pthread_t pid_send, pid_recv;
 int ret;
@@ -99,17 +108,14 @@ void* transmitter(void* ifname)
 	bzero(snd_buff, iface_mtu);
 	/* radiotap configuration */
 	rt->it_len = sizeof(radiotap_tx_header);
-	rt->it_present = RT_TXCFG_FLAGS;
+	rt->it_present = RT_RATE_FLAG;
 	rt->rate = RATE_TO_RADIOTAP(5500);
-	rt->freq = 2442; /* BG, channel 7 */
-	rt->chtype = 0x00c0; /* PURE_G_CHANNEL */
-	rt->txpwr = 20; /* 20 dBm */
-	rt->ant = 1; /* 1-st antenna */
 	/* ieee802.11 header */
 	wl->frame_control = htons(0x8800); /*!!!*/
 	memcpy(wl->src, loc_mac, ETH_ALEN);
 	memcpy(wl->dst, rem_mac, ETH_ALEN);
 	memcpy(wl->bssid, bssid, ETH_ALEN);
+	wl->qos_control = 0x0000;
 	/* llc header */
 	llc->dsap = 0xaa; /*!!!*/
 	llc->ssap = 0xaa; /*!!!*/

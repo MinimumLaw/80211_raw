@@ -28,12 +28,8 @@ typedef struct {
     u_int8_t	it_pad;
     __le16	it_len; /* sizeof(radiotap_tx_header) */
     __le32	it_present; /* always RT_TXCFG_FLAGS */
-    u_int8_t	flags; /* wep, frars, etc.. */
     u_int8_t	rate;
-    u_int16_t	freq;
-    u_int16_t	chtype;
-    u_int8_t	txpwr;
-    u_int8_t	ant;
+    u_int32_t	mb_pad;
 } __attribute__((__packed__)) radiotap_tx_header;
 
 typedef struct {
